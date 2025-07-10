@@ -48,7 +48,7 @@ docker-compose up --build
 
 ### Running Locally
 
-Change the .env file according to the local environment. Not needed if running using docker-compose.
+Change the .env file according to the local environment.
 
 Don't foget to change DATABASE_URL db:5432 to localhost:5432 in .env after copying from .env.example to run locally
 
