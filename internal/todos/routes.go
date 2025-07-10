@@ -12,7 +12,9 @@ func Register(r *mux.Router, client *ent.Client) {
 
 	protected.HandleFunc("/", CreateTodo(client)).Methods("POST")
 	protected.HandleFunc("/", GetAllTodos(client)).Methods("GET")
+	protected.HandleFunc("/recently-viewed", GetRecentlyViewed(client)).Methods("GET")
 	protected.HandleFunc("/{id}", GetTodoByID(client)).Methods("GET")
 	protected.HandleFunc("/{id}", UpdateTodo(client)).Methods("PUT")
 	protected.HandleFunc("/{id}", DeleteTodo(client)).Methods("DELETE")
+
 }

@@ -4,11 +4,14 @@ import (
 	"context"
 
 	"github.com/itzpushan/todo/ent"
+	"github.com/itzpushan/todo/internal/config"
 	_ "github.com/lib/pq"
 )
 
 func NewClient() (*ent.Client, error) {
-	client, err := ent.Open("postgres", "host=localhost port=5432 user=postgres password=pushan dbname=postgres sslmode=disable")
+	dsn := config.GetEnv("DATABASE_URL", "postgresql://postgres:pushan@localhost:5432/postgres?sslmode=disable")
+
+	client, err := ent.Open("postgres", dsn)
 	if err != nil {
 		return nil, err
 	}

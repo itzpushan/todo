@@ -7,13 +7,14 @@ import (
 
 	"github.com/itzpushan/todo/ent"
 	"github.com/itzpushan/todo/ent/user"
+	"github.com/itzpushan/todo/internal/config"
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
-var jwtSecret = []byte("thisIsMyJwtSecret")
+var jwtSecret = []byte(config.GetEnv("JWT_SECRET", "thisIsMyJwtSecret"))
 
 type SignupRequest struct {
 	Name     string `json:"name"`

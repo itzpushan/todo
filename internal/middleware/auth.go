@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/golang-jwt/jwt/v5"
+	"github.com/itzpushan/todo/internal/config"
 )
 
 type contextKey string
@@ -20,9 +21,11 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			return
 		}
 
+		secret := config.GetEnv("JWT_SECRET", "thisIsMyJwtSecret")
+
 		tokenString := strings.TrimPrefix(authHeader, "Bearer ")
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-			return []byte("thisIsMyJwtSecret"), nil
+			return []byte(secret), nil
 		})
 
 		if err != nil || !token.Valid {

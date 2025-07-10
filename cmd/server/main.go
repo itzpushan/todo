@@ -4,11 +4,14 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/itzpushan/todo/internal/config"
 	"github.com/itzpushan/todo/internal/db"
 	"github.com/itzpushan/todo/internal/router"
 )
 
 func main() {
+	config.LoadEnv()
+
 	client, err := db.NewClient()
 	if err != nil {
 		log.Fatalf("Failed to Connect: %v", err)
