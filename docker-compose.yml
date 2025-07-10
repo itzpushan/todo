@@ -1,0 +1,41 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres
+    container_name: pg-todo
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: pushan
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+
+  migrate:
+    image: golang:1.24
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/app
+    working_dir: /app
+    entrypoint: >
+      sh -c "
+        apt-get update &&
+        apt-get install -y curl unzip &&
+        curl -sSf https://atlasgo.sh | sh &&
+        atlas migrate apply --dir file://ent/migrate/migrations --url postgresql://postgres:pushan@db:5432/postgres?sslmode=disable
+      "
+
+  backend:
+    build: .
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    ports:
+      - "8000:8000"
+    env_file: .env
