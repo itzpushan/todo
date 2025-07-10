@@ -38,13 +38,13 @@ Built with:
 
 ## Setup
 
+Add .env file and copy contents of .env.example to .env
+
 ### Running with Docker
 
 ```bash
 docker-compose up --build
 ```
-
-Add .env file and copy contents of .env.example to .env
 
 ### Running Locally
 
